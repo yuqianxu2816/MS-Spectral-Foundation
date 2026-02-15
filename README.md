@@ -16,10 +16,11 @@ More specifically:
 
 - Serum LC-MS/MS data contains thousands of MS/MS spectra reflecting underlying protein and glycoprotein states.
 - Instead of relying on manually designed features, can we automatically learn representations from spectra themselves?
-- Do these learned representations capture disease-related molecular patterns that support classification between HCC and cirrhosis?
+- Do these learned representations capture disease-related molecular patterns that reveal systematic embedding-space differences between HCC and cirrhosis?
 
 This project explores a representation learning approach for **proteomics-related mass spectrometry data** inspired by spatial omics studies, aiming to understand whether self-supervised learning can reveal biologically meaningful structure from highly heterogeneous clinical samples.
 
+Note: Due to the limited number of patient samples (5 HCC samples and 5 cirrhosis samples), this project focuses on representation analysis rather than supervised disease classification.
 ---
 
 ## Overview
@@ -35,11 +36,11 @@ Instead of directly modeling spatial omics images, this project focuses on learn
 3. Use **self-supervised masked learning** to train a model that reconstructs missing spectral information
 4. Extract fixed-dimensional embeddings that summarize each spectrum
 5. Aggregate spectrum embeddings into sample-level representations
-6. Perform a simple downstream classification task (**HCC vs. cirrhosis**) to evaluate whether the learned embeddings capture disease-related structure
+6. Perform downstream embedding-space analysis (distribution comparison and exemplar spectra discovery between HCC and cirrhosis) to evaluate whether the learned embeddings capture disease-related structure
 
 In short:
 
-> Instead of manually defining features, we let the model learn how spectra are structured, and then test whether the learned representations are useful for disease differentiation.
+> Instead of manually defining features, we let the model learn how spectra are structured, and then examine whether the learned representations reveal systematic molecular differences between disease groups.
 
 ---
 
@@ -67,8 +68,9 @@ The pipeline produces:
 - Processed spectra (MGF-based)
 - Learned spectrum embeddings
 - Sample-level embeddings
-- **Downstream binary classification result**
-  - HCC vs. cirrhosis
+- Downstream embedding-space analysis results
+  - Distribution differences between HCC and cirrhosis
+  - Exemplar spectra highlighting maximal/minimal cross-group similarity
 - Basic visualization (e.g., PCA / UMAP)
 
 --- 
@@ -77,6 +79,6 @@ The pipeline produces:
 
 - Learn general-purpose spectral embeddings from MS/MS data
 - Reduce dependence on manual feature engineering
-- Test whether learned embeddings separate HCC and cirrhosis
+- Test whether learned embeddings reveal systematic molecular shifts between HCC and cirrhosis
 - Build a modular pipeline from raw MS data to downstream biological interpretation
 Note: for all the md documents except DDS.md, I used AI to format the documents such as organizing bullet points.
