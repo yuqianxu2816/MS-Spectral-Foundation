@@ -21,6 +21,7 @@ More specifically:
 This project explores a representation learning approach for **proteomics-related mass spectrometry data** inspired by spatial omics studies, aiming to understand whether self-supervised learning can reveal biologically meaningful structure from highly heterogeneous clinical samples.
 
 Due to the limited number of patient samples (5 HCC samples and 5 cirrhosis samples), this project focuses on representation analysis rather than supervised disease classification.
+
 ---
 
 ## Overview
