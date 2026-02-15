@@ -312,7 +312,6 @@ Use exemplar spectra identified in Module 7 to:
 - Exemplar spectra summaries
 
 
----
 
 ## What connects the modules
 
