@@ -8,8 +8,17 @@ https://www.ebi.ac.uk/pride/archive/projects/PXD047546
 The actual input data for this project consists of raw LC-MS/MS mass spectrum files (`.raw`) and their derived chromatogram files (`.mzML` / `.mgf`).  
 The remaining `.txt` / `.fasta` files are used for grouping information, validation, or comparison with the results of the original paper, but are not used as direct inputs for the self-supervised model.
 
-Each of cirrhotic sample and HCC sample contains 5 raw files, each raw file has the size around 2 to 3 GB. For the purpose to test the deep learning method and limitation of computing resource, we only use 1 cirrhotic raw file and 1 HCC raw file.
+Each cirrhotic sample and HCC sample contains 5 raw files (10 raw files total).  
+Each raw file corresponds to one LC-MS/MS run from one serum sample (i.e., one patient-level sample), has around 2 to 5 GB.
 
+In earlier prototype testing, a small subset of files was used for debugging and pipeline validation.  
+In the current representation-learning setting, all available raw files are used for embedding-space analysis rather than supervised disease classification.
+
+Important distinction:
+
+- **One raw file = one biological sample (one patient serum sample)**
+- **One raw file contains thousands to hundreds of thousands of MS/MS spectra**
+- **Each MS/MS spectrum (BEGIN IONS ... END IONS in MGF) is treated as an individual training instance for self-supervised learning**
 
 
 ---
@@ -52,6 +61,18 @@ Each of cirrhotic sample and HCC sample contains 5 raw files, each raw file has 
   - **cirrhotic** (control)  
   - **HCC** (hepatocellular carcinoma + cirrhotic background)  
 
+#### Sample Structure Clarification
+
+In this project:
+
+- A **sample** refers to a single serum LC-MS/MS run.
+- Each `.raw` file corresponds to one sample (one patient).
+- During acquisition, the instrument performs repeated scans over time, producing many MS/MS spectra from the same sample.
+
+Therefore:
+
+- disease-level groups (HCC vs cirrhosis) exist at the **sample level**
+- model training operates at the **spectrum level**
 
 ---
 
@@ -92,7 +113,7 @@ Each of cirrhotic sample and HCC sample contains 5 raw files, each raw file has 
 - ...
 - END IONS
 
-In this project, the input to the self-supervised model is MS/MS spectra in MGF format, with each `BEGIN IONS … END IONS` block considered as a training sample.
+In this project, the input to the self-supervised model is MS/MS spectra in MGF format, with each `BEGIN IONS … END IONS` block is treated as a spectrum-level training instance.
 
 
 #### Data Format Seen by the Model
