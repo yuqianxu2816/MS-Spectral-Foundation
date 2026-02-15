@@ -43,6 +43,8 @@ In short:
 
 > Instead of manually defining features, we let the model learn how spectra are structured, and then examine whether the learned representations reveal systematic molecular differences between disease groups.
 
+This work is positioned as a representation-learning foundation for future large-scale mass spectrometry analysis, where learned spectral embeddings can be reused across downstream molecular discovery tasks.
+
 ---
 
 ## Input and Output
