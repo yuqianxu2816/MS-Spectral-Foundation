@@ -256,7 +256,7 @@ Serialize extracted MS2 spectra into MGF format for model input.
 - Group spectrum-level embeddings by raw file (10 in total)
 - Aggregate embeddings to sample-level representations using mean pooling
 - Compute intra-group and cross-group distances in embedding space
-- Compare embedding distributions between HCC and cirrhosis groups
+- Compare embedding distributions between HCC and cirrhosis groups (no classifier training involved)
 - Optionally compute statistical distance metrics (e.g., centroid distance or distribution similarity)
 
 **Deliverable:**
