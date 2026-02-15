@@ -300,6 +300,7 @@ Serialize extracted MS2 spectra into MGF format for model input.
 - Identify spectra with:
   - maximal cross-group distance
   - minimal cross-group distance
+  - Distance is computed using embedding-space nearest-neighbor metrics (e.g., cosine or Euclidean distance).
   - representative positions within embedding clusters
 - Map selected embeddings back to original spectra metadata
 
