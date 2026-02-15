@@ -6,7 +6,7 @@ This project is inspired by spatial omics studies of hepatocellular carcinoma (H
 
 Spatial omics provides the biological motivation by identifying disease-associated glycan patterns in tissue and serum.  
 
-This project focuses on the computational side: learning general spectral representations from MS/MS data derived from these experiments using self-supervised learning.
+This project focuses on the computational side: learning general spectral representations from serum LC-MS/MS data, biologically inspired by spatial omics findings.
 
 Note that the current project does not analyze spatial imaging data directly; instead, spatial omics studies serve as biological motivation for studying molecular heterogeneity.
 
