@@ -8,6 +8,8 @@ Biological Motivation: This work is inspired by spatial omics studies of HCC, wh
 
 Unlike traditional supervised machine learning approaches that rely on manual feature engineering and explicit labels (e.g., HCC vs. cirrhosis), this project first learns general-purpose representations (spectral embeddings) of MS/MS spectra through self-supervision. These representations are then applied to downstream representation analysis tasks, with the goal of exploring whether robust and transferable molecular structure can be revealed from small-sample, highly heterogeneous glycoproteomics data.
 
+The software is designed as a modular representation-learning framework that can support multiple downstream molecular analysis tasks beyond the current study.
+
 
 ### 1.1 Input
 
