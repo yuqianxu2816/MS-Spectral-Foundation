@@ -8,6 +8,8 @@ Spatial omics provides the biological motivation by identifying disease-associat
 
 This project focuses on the computational side: learning general spectral representations from MS/MS data derived from these experiments using self-supervised learning.
 
+Note that the current project does not analyze spatial imaging data directly; instead, spatial omics studies serve as biological motivation for studying molecular heterogeneity.
+
 ## Biological Question
 
 Do learned spectral embeddings reveal systematic molecular shifts between HCC and cirrhosis serum samples, as reflected by embedding-space distribution differences and exemplar spectra?
