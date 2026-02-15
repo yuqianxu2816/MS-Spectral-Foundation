@@ -51,7 +51,7 @@ Typical use cases include:
 
 - Learning spectrum-level embeddings from MS/MS data using masked self-supervised learning
 - Aggregating spectrum embeddings to represent biological samples
-- Exploring whether learned embeddings capture disease-related molecular structure (e.g., HCC vs. cirrhosis) through embedding-space visualization and distribution analysis
+- Exploring whether learned embeddings capture potential disease-related molecular structure (e.g., HCC vs. cirrhosis) through embedding-space visualization and distribution analysis
 
 ---
 
