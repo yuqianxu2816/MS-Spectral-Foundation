@@ -206,59 +206,114 @@ After self-supervised pretraining, the pretrained encoder is used to extract spe
 
 ### Downstream Tasks
 
-### Module 7 — Aggregate spectrum-level embeddings to sample-level
+### Module 7 — Analyze embedding-space distributions and sample-level structure
 
-Aggregate multiple spectrum-level embeddings derived from the same raw file into a single sample-level embedding representing the entire biological sample.
+This module performs downstream representation analysis based on spectrum-level embeddings to examine whether systematic molecular differences exist between HCC and cirrhosis samples.
 
 **Input**
-- A set of embeddings from one raw file: (Each embedding corresponds to one MS/MS spectrum from the same sample.)
+
+- Spectrum-level embeddings extracted from Module 6:
   - E = {e1, e2, ..., en},  ei ∈ R^d
+- Metadata:
+  - sample ID (raw file)
+  - disease group (HCC or cirrhosis)
 
-**Aggregation methods**
+
+### Analysis procedures
+
+**1) Sample-level aggregation (used for visualization and comparison)**
+
+Spectrum embeddings from the same raw file can be aggregated to obtain sample-level representations:
+
 - Mean pooling (used in this project)
-- Median pooling
-- Attention-based pooling (optional)
+- Median pooling (optional)
 
-**Output**
-- A single sample-level embedding:
+Output:
+
+- sample-level embedding:
   - z ∈ R^d
 
-  
-**Output format**
-- sample_embedding: Vector[d]
-  
-**Note**
 
-Due to limited computational resources:
+**2) Embedding-space distribution analysis**
 
-1 cirrhotic raw file -> 1 sample embedding
+Instead of training a supervised classifier, this project evaluates whether embeddings capture disease-related structure by comparing embedding distributions:
 
-1 HCC raw file -> 1 sample embedding
+- Compare intra-group vs cross-group distances
+- Visualize embeddings using PCA / UMAP
+- Examine whether HCC and cirrhosis samples exhibit systematic distribution shifts
 
-This setup is sufficient for validating the proposed pipeline.
 
-### Module 8 — Train a classifier on sample-level embeddings
-This step is a downstream supervised task that uses the learned sample-level embeddings as fixed representations. The classifier serves as an evaluation layer to assess whether the learned embeddings capture disease-relevant information.
+**3) Exemplar spectra discovery**
 
-**Input**
-- Sample-level embeddings and corresponding labels:
-  - X ∈ R^{2 x d},  y = [0, 1]
-    - 0 = cirrhosis
-    - 1 = HCC
+Identify representative spectra that characterize similarities or differences between disease groups:
 
-**Model**
+- Spectra with maximal cross-group distance
+- Spectra with minimal cross-group distance
+- Representative spectra within embedding clusters
 
-A simple supervised classifier is used, such as:
-- Logistic regression
-- Linear layer + sigmoid
-- Linear SVM
+These spectra are used for qualitative biological interpretation.
+
 
 **Output**
-- y_hat ∈ {0, 1} or P(HCC | sample)
+
+- Sample-level embeddings (for visualization)
+- Embedding-space comparison results
+- Representative exemplar spectra
+
+
+**Output format**
+
+- sample_embedding: Vector[d]
+- distance_matrix or distribution metrics
+- exemplar_spectra: List[Spectrum]
+
+
+### Module 8 — Downstream representation evaluation (non-supervised)
+
+This module evaluates the learned representations without supervised disease classification. The goal is to assess whether the learned embeddings reveal systematic molecular structure related to disease groups.
+
+---
+
+**Input**
+
+- Spectrum-level embeddings from Module 6
+- Sample-level embeddings from Module 7
+- Group labels (used only for comparison and visualization)
+
+
+### Evaluation strategies
+
+**1) Distribution-level comparison**
+
+Evaluate whether embedding distributions differ between HCC and cirrhosis:
+
+- Compare inter-group and intra-group distances
+- Measure embedding-space separation using statistical distance metrics (optional)
+
+
+**2) Visualization-based evaluation**
+
+- PCA or UMAP projection of embeddings
+- Visual inspection of group-level structure
+
+
+**3) Exemplar-based analysis**
+
+Use exemplar spectra identified in Module 7 to:
+
+- Highlight spectra contributing to cross-group differences
+- Examine potential molecular patterns associated with disease states
+
+
+**Output**
+
+- Embedding-space evaluation results
+- Visualization plots
+- Exemplar spectra summaries
 
 
 ---
 
 ## What connects the modules
 
-The output of Module 3 serves as the input to Module 4, enabling masked self-supervised training. The pretrained encoder from Modules 4–5 is reused in Module 6 to generate spectrum-level embeddings, which are then aggregated in Module 7.
+The output of Module 3 serves as the input to Module 4, enabling masked self-supervised training. The pretrained encoder from Modules 4–5 is reused in Module 6 to generate spectrum-level embeddings, which are then analyzed in Module 7–8 through embedding-space distribution comparison and exemplar spectra analysis.
