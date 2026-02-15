@@ -6,7 +6,7 @@ For each MS/MS spectrum, calculate an embedding vector of a fixed dimension.
 
 - Input: one MS/MS spectrum (m/z–intensity list)
 - Intermediate output: embedding ∈ R^d (e.g., d = 128)
-- Final output: predicted disease label ∈ {cirrhosis, HCC}
+- Final output: sample-level embedding analysis and exemplar spectra revealing distribution-level differences.
 ---
 
 
