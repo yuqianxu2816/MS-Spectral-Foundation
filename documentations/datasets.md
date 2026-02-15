@@ -8,17 +8,19 @@ https://www.ebi.ac.uk/pride/archive/projects/PXD047546
 The actual input data for this project consists of raw LC-MS/MS mass spectrum files (`.raw`) and their derived chromatogram files (`.mzML` / `.mgf`).  
 The remaining `.txt` / `.fasta` files are used for grouping information, validation, or comparison with the results of the original paper, but are not used as direct inputs for the self-supervised model.
 
-Each cirrhotic sample and HCC sample contains 5 raw files (10 raw files total).  
+The dataset contains 10 raw LC-MS/MS files in total:
+- 5 cirrhosis runs
+- 5 HCC runs
 Each raw file corresponds to one LC-MS/MS run from one serum sample (i.e., one patient-level sample), has around 2 to 5 GB.
 
 In earlier prototype testing, a small subset of files was used for debugging and pipeline validation.  
-In the current representation-learning setting, all available raw files are used for embedding-space analysis rather than supervised disease classification.
+In the current representation-learning setting, all available raw files are used for embedding-space analysis.
 
 Important distinction:
 
 - **One raw file = one biological sample (one patient serum sample)**
 - **One raw file contains thousands to hundreds of thousands of MS/MS spectra**
-- **Each MS/MS spectrum (BEGIN IONS ... END IONS in MGF) is treated as an individual training instance for self-supervised learning**
+- **Each MS/MS spectrum (BEGIN IONS ... END IONS in MGF) is treated as a spectrum-level training instance for self-supervised learning**
 
 
 ---
