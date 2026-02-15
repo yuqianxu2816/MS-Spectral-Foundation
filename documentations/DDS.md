@@ -270,6 +270,8 @@ These spectra are used for qualitative biological interpretation.
 
 ### Module 8 — Downstream representation evaluation (non-supervised)
 
+Module 8 summarizes and interprets results produced by Module 7 rather than introducing new computational steps.
+
 This module evaluates the learned representations without supervised disease classification. The goal is to assess whether the learned embeddings reveal systematic molecular structure related to disease groups.
 
 ---
