@@ -57,6 +57,21 @@ def test_remove_precursor_peak_branch_no_precursor_and_with_precursor_Da():
     out_yes = fn(peaks, precursor_mz=100.0)
     assert set(out_yes[:, 0].tolist()) == {99.0, 101.0}
 
+def test_remove_precursor_peak_ppm_unit():
+    peaks = np.array([
+        [999.98, 1.0],   # |999.98 - 1000| = 0.02 > 0.01, keep
+        [999.995, 2.0],  # |999.995 - 1000| = 0.005 <= 0.01, remove
+        [1000.0, 3.0],   # |1000 - 1000| = 0 <= 0.01, remove
+        [1000.005, 4.0], # |1000.005 - 1000| = 0.005 <= 0.01, remove
+        [1000.02, 5.0],  # |1000.02 - 1000| = 0.02 > 0.01, keep
+    ])
+    
+    fn = pf.remove_precursor_peak(tol=10, unit="ppm")
+    out = fn(peaks, precursor_mz=1000.0)
+    
+    # Should keep only peaks at 999.98 and 1000.02
+    assert out.shape[0] == 2
+    assert set(out[:, 0].tolist()) == {999.98, 1000.02}
 
 def test_scale_intensity_none_root_log_rank_and_errors():
     peaks = np.array([[100.0, -1.0], [200.0, 4.0], [300.0, 9.0]])
@@ -129,6 +144,7 @@ def test_discard_low_quality_branch():
     out = fn2(peaks)
     assert out is not None
     assert out.shape[0] == 2
+
 
 
 def test_scale_to_unit_norm_zero_norm_and_nonzero():
