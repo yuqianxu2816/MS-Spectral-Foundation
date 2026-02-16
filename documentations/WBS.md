@@ -1,3 +1,6 @@
+### Biological Context:
+Input spectra are derived from workflows related to spatial glycan imaging studies of HCC, where spatial molecular heterogeneity motivates downstream representation learning.
+
 ## Problem 1B
 
 ## Generate MGF Spectra as the First Basic Output
@@ -245,43 +248,91 @@ Serialize extracted MS2 spectra into MGF format for model input.
 
 ---
 
-### Action 3.2 — Aggregate embeddings to sample level
+### Action 3.2 — Analyze embedding-space distributions
 
-**Estimated time:** 1 hour
-
-**Sub-tasks:**
-- Group spectrum embeddings by raw file (sample)
-- Apply mean pooling as the primary aggregation method
-- Optionally compare with median pooling
-
-**Deliverable:**
-- One sample-level embedding per raw file
-
-**Completion criteria:**
-- Exactly one embedding for cirrhosis and one for HCC
-- Aggregation method is deterministic and reproducible
-
----
-
-### Action 3.3 — Visual embedding evaluation
-
-**Estimated time:** 1–2 hours
+**Estimated time:** 2–3 hours
 
 **Sub-tasks:**
-- Apply PCA or UMAP to sample-level embeddings
-- Generate a 2D visualization
-- Label points by disease status
+- Group spectrum-level embeddings by raw file (10 in total)
+- Aggregate embeddings to sample-level representations using mean pooling
+- Compute intra-group and cross-group distances in embedding space
+- Compare embedding distributions between HCC and cirrhosis groups (no classifier training involved)
+- Optionally compute statistical distance metrics (e.g., centroid distance or distribution similarity)
 
 **Deliverable:**
-- PCA or UMAP plot comparing HCC and cirrhosis embeddings
+- Sample-level embeddings
+- Embedding-space distance matrix or distribution comparison results
 
 **Completion criteria:**
-- Plot is generated without errors
-- A separable or distinguishable trend is observable between the two groups
+- One sample-level embedding is produced per raw file (10 in total)
+- Distance computation runs without errors
+- Embedding-space structure can be quantitatively analyzed
 
 **Total time for Activity 3:** **~3–5 hours**
 
 ---
+
+### Action 3.3 — Embedding visualization and structure inspection 
+
+**Estimated time:** 1–2 hours
+
+**Sub-tasks:**
+- Apply PCA or UMAP to embedding vectors
+- Visualize sample-level or sampled spectrum-level embeddings
+- Label points by disease group (HCC vs cirrhosis)
+- Inspect whether systematic distribution shifts are visible
+
+**Deliverable:**
+- PCA / UMAP visualization plots
+
+**Completion criteria:**
+- Visualization is successfully generated
+- Embedding structure is interpretable at the group level
+
+---
+
+### Action 3.4 — Exemplar spectra discovery (Task B)
+
+**Estimated time:** 2–3 hours
+
+**Sub-tasks:**
+- Compute nearest-neighbor or distance-based relationships between spectra
+- Identify spectra with:
+  - maximal cross-group distance
+  - minimal cross-group distance
+  - Distance is computed using embedding-space nearest-neighbor metrics (e.g., cosine or Euclidean distance).
+  - representative positions within embedding clusters
+- Map selected embeddings back to original spectra metadata
+
+**Deliverable:**
+- A list of exemplar spectra representing group differences or similarities
+
+**Completion criteria:**
+- Exemplar spectra can be traced back to original raw files
+- Distance-based selection is reproducible
+- Representative spectra are successfully extracted
+
+---
+
+### Action 3.5 — Downstream representation evaluation (Module 8)
+
+**Estimated time:** 1–2 hours
+
+**Sub-tasks:**
+- Summarize distribution-level analysis results
+- Interpret visualization outcomes
+- Analyze exemplar spectra for potential molecular patterns
+- Evaluate whether learned embeddings capture systematic disease-related structure
+
+**Deliverable:**
+- Representation evaluation summary
+- Final plots and exemplar spectra summaries
+
+**Completion criteria:**
+- Evaluation results are documented
+- Visualization and exemplar analysis are integrated into final interpretation
+
+**Total time for Activity 3:** **~6–10 hours**
 
 ## Overall Time Estimate
 
@@ -289,5 +340,5 @@ Serialize extracted MS2 spectra into MGF format for model input.
 |--------|----------------|
 | Activity 1: MGF Data Analysis | 4–5 hours |
 | Activity 2: Masked Self-Supervised Model | 8–10 hours |
-| Activity 3: Embedding Evaluation | 3–5 hours |
-| **Total** | **~15–20 hours** |
+| Activity 3: Embedding Evaluation | 6–10 hours |
+| **Total** | **~18–25 hours** |

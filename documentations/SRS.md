@@ -2,9 +2,13 @@
 
 ## 1. Overview
 
-This project aims to develop a deep learning method for mass spectrometry representation based on self-supervised masked learning, utilizing serum mass spectrometry data from hepatocellular carcinoma (HCC) and cirrhosis. The learned representations are used to perform a binary disease classification task (HCC vs. cirrhosis) based on sample-level embeddings.
+This project aims to develop a deep learning method for mass spectrometry representation based on self-supervised masked learning, utilizing serum mass spectrometry data from hepatocellular carcinoma (HCC) and cirrhosis. The learned representations are used for downstream embedding-space analysis to examine systematic molecular differences between HCC and cirrhosis at the sample level. Due to the limited cohort size, the software emphasizes representation analysis rather than supervised disease classification.
 
-Unlike traditional supervised machine learning approaches that rely on manual feature engineering and explicit labels (e.g., HCC vs. cirrhosis), this project first learns general-purpose representations (spectral embeddings) of MS/MS spectra through self-supervision. These representations are then applied to downstream disease differentiation tasks, with the goal of exploring whether more robust and transferable representations can be obtained from small-sample, highly heterogeneous glycoproteomics data. 
+Biological Motivation: This work is inspired by spatial omics studies of HCC, where spatially resolved glycan and proteomic measurements reveal strong molecular heterogeneity across tumor tissues. Rather than directly modeling spatial imaging data, this project focuses on learning transferable representations from derived MS/MS spectra as a computational abstraction of spatially driven molecular variation.
+
+Unlike traditional supervised machine learning approaches that rely on manual feature engineering and explicit labels (e.g., HCC vs. cirrhosis), this project first learns general-purpose representations (spectral embeddings) of MS/MS spectra through self-supervision. These representations are then applied to downstream representation analysis tasks, with the goal of exploring whether robust and transferable molecular structure can be revealed from small-sample, highly heterogeneous glycoproteomics data.
+
+The software is designed as a modular representation-learning framework that can support multiple downstream molecular analysis tasks beyond the current study.
 
 
 ### 1.1 Input
@@ -28,8 +32,8 @@ The software generates:
 - Processed spectra data
 - Spectrum-level embeddings
 - Sample-level embeddings
-- **Binary classification output**
-  - HCC or cirrhosis
+- Embedding-space analysis results
+  - Distribution differences and exemplar spectra between HCC and cirrhosis
 - Basic embedding visualization results
 
 
@@ -47,7 +51,7 @@ Typical use cases include:
 
 - Learning spectrum-level embeddings from MS/MS data using masked self-supervised learning
 - Aggregating spectrum embeddings to represent biological samples
-- Exploring whether learned embeddings capture disease-related structure (e.g., HCC vs. cirrhosis) through visualization or simple downstream models
+- Exploring whether learned embeddings capture potential disease-related molecular structure (e.g., HCC vs. cirrhosis) through embedding-space visualization and distribution analysis
 
 ---
 
