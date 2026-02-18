@@ -1,12 +1,5 @@
 """
-data_io.py
-
-Module 1: Data I/O
-1. Read mzML
-2. Extract MS2 spectra (m/z, intensity) and precursor m/z (pepmass)
-3. Write spectra to MGF
-
-This module uses pyteomics (mzml, mgf).
+Module 0: Convert mzML to MGF
 """
 
 from __future__ import annotations

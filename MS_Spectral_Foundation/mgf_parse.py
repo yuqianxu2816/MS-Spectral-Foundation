@@ -1,3 +1,7 @@
+"""
+Module 1: Read the MGF file
+"""
+
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple

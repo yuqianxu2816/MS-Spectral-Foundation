@@ -2,6 +2,10 @@
 import numpy as np
 import torch
 
+"""
+Module 3: Discretize / tokenize the spectrum (m/z binning)
+"""
+
 def bin_mz(npz_path, bin_size=0.5, mz_min=50.0, mz_max=2500.0, is_normalized=False):
     """
     Fixed-width binning for spectra_filtered.npz

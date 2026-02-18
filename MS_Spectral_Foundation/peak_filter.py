@@ -1,3 +1,7 @@
+"""
+Module 2: Peak filtering and preprocessing
+"""
+
 from __future__ import annotations
 
 from typing import Callable, Optional, Literal

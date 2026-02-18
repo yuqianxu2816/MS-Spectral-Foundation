@@ -1,5 +1,9 @@
 from pyteomics import mzml, mgf
 
+"""
+Module 0: Convert mzML to MGF
+"""
+
 spectra = []
 with mzml.read("09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic.mzML") as reader:
     for sp in reader:
