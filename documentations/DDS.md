@@ -69,7 +69,7 @@ Parse MGF-formatted files and convert each MS/MS spectrum into a standardized in
   - peaks": List[Tuple[float, float]]  # [(mz1, inten1), (mz2, inten2), ...]
 - }  
 
-### Module 2 — Extract the (m/z, intensity) pairs from each spectrum
+### Module 2 — Peak filtering and preprocessing
 
 Filter raw peak lists from spectrum objects and produce cleaned numeric representations suitable for downstream preprocessing and binning.
 
