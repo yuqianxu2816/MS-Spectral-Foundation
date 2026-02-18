@@ -1,3 +1,7 @@
+"""
+Module 0: Convert mzML to MGF
+"""
+
 from pyteomics import mzml, mgf
 
 spectra = []
