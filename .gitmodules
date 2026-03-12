@@ -1,0 +1,6 @@
+[submodule "casanovo"]
+	path = casanovo
+	url = https://github.com/Noble-Lab/casanovo.git
+[submodule "depthcharge"]
+	path = depthcharge
+	url = https://github.com/wfondrie/depthcharge.git
