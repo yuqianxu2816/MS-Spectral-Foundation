@@ -47,6 +47,34 @@ def bin_mz(npz_path, bin_size=0.5, mz_min=50.0, mz_max=2500.0, is_normalized=Fal
     bins[~valid_mask] = 0
     return bins.detach()
 
+
+def bin_mz_tensor(mzs: torch.Tensor, *, bin_size: float, mz_min: float, mz_max: float, n_bins: int, is_normalized: bool = False) -> torch.Tensor:
+    """
+    Bin a tensor of m/z values directly (no file I/O).
+    Args:
+        mzs: torch.Tensor of m/z values, shape (N, L)
+        bin_size: bin width
+        mz_min: minimum m/z
+        mz_max: maximum m/z
+        n_bins: total number of bins
+        is_normalized: True if m/z already normalized to [0, 1]
+    Returns:
+        bins: torch.LongTensor, same shape as mzs
+    """
+    valid_mask = mzs > 0
+    if not valid_mask.any():
+        return torch.zeros_like(mzs, dtype=torch.long)
+    if is_normalized:
+        clamped = torch.clamp(mzs, min=0.0, max=1.0)
+        bins = torch.floor(clamped * n_bins).long()
+    else:
+        clamped = torch.clamp(mzs, min=mz_min, max=mz_max)
+        bins = torch.floor((clamped - mz_min) / bin_size).long()
+    bins = bins.clamp(min=0, max=n_bins - 1)
+    bins[~valid_mask] = 0
+    return bins.detach()
+
+
 if __name__ == "__main__":
     import sys
     npz_path = "output/spectra_filtered.npz"

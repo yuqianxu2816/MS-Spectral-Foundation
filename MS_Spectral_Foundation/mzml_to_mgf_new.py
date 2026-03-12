@@ -5,7 +5,7 @@ Module 0: Convert mzML to MGF
 """
 
 spectra = []
-with mzml.read("09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic.mzML") as reader:
+with mzml.read(r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC.mzML") as reader:
     for sp in reader:
         if sp.get("ms level") != 2:
             continue
@@ -21,4 +21,4 @@ with mzml.read("09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic.mzML") as r
 
         spectra.append({"m/z array": sp["m/z array"], "intensity array": sp["intensity array"], "params": params})
 
-mgf.write(spectra, "09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf")
+mgf.write(spectra, r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf")
