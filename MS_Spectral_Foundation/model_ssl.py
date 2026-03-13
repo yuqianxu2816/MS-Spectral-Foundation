@@ -596,7 +596,7 @@ class SpectrumSSLv2(pl.LightningModule):
                 'model_state_dict': self.state_dict(),
                 'hparams': self.hparams,
             }, pt_save_path)
-            print(f"\n✅ Model saved to {pt_save_path}")
+            print(f"\n Model saved to {pt_save_path}")
         # Try to read CE/Total aggregated metrics if they exist
         try:
             train_ce = callback_metrics.get("train_CE_Loss_epoch", torch.tensor(float("nan"))).detach().item()
