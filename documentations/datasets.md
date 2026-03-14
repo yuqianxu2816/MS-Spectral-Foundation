@@ -127,7 +127,7 @@ In this project, the input to the self-supervised model is MS/MS spectra in MGF 
 
 ## Example dataset for using the tool (HW 4)
 
-To demonstrate how the MS-Spectral-Foundation pipeline operates, a small example dataset derived from the PRIDE project **PXD047546** is used.
+To demonstrate how the MS-Spectral-Foundation pipeline operates, datasets derived from the PRIDE project **PXD047546** is used.
 
 ### Source and preprocessing
 
@@ -146,6 +146,27 @@ Example files used in the demonstration pipeline:
 - 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf
 - 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf
 
+
+#### Usage in the project workflow
+
+The example MGF files are used at different stages of the pipeline:
+
+- **Model training**
+  
+  The file  
+  `09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf`  
+  is used as the primary input dataset for training the self-supervised spectrum encoder.  
+  During training, each `BEGIN IONS ... END IONS` block in this file is treated as an individual spectrum instance.
+
+- **Downstream embedding analysis**
+
+  After training, embeddings are extracted from spectra in two example files:
+
+  - `09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf`
+  - `09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf`
+
+  These two datasets represent two biological conditions (**cirrhosis** and **HCC**) and are used to perform downstream embedding-space analysis.  
+  The extracted spectrum embeddings are aggregated and compared to evaluate whether the learned representations capture meaningful molecular differences between the two disease groups.
 
 ### Dataset structure
 
