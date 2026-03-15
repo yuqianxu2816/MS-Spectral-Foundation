@@ -58,7 +58,7 @@ def _load_cache(cache_dir: str, cache_id: str):
     return None
 
 
-def main():
+def main(config_override=None):
     # Configuration
     config = {
         # Model
@@ -99,7 +99,9 @@ def main():
         # Set to None to disable caching
         "cache_dir": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\logs\embedding_cache",
     }
-    
+    if config_override:
+        config.update(config_override)
+
     # Create output directory
     os.makedirs(config["output_dir"], exist_ok=True)
     

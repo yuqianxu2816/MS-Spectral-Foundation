@@ -69,7 +69,7 @@ class EmbeddingAnalyzer:
         
         if path.suffix == ".pt":
             # Custom .pt checkpoint
-            checkpoint = torch.load(model_path, map_location="cpu")
+            checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
             hparams = checkpoint.get("hparams", {})
             
             model = SpectrumSSLv2(**hparams)

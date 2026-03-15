@@ -15,7 +15,7 @@ from MS_Spectral_Foundation.model_ssl import SpectrumSSLv2
 import os
 
 
-def main():
+def main(config_override=None):
     # Check GPU availability
     print("="*80)
     print("GPU Information:")
@@ -51,7 +51,10 @@ def main():
         "lr": 1e-4,
         "max_epochs": 20,
         "num_workers": 4,
+        "output_dir": "./outputs",
     }
+    if config_override:
+        config.update(config_override)
     
     print("="*80)
     print("MS-Spectral-Foundation Training")
@@ -218,10 +221,10 @@ def main():
     
     trainer = pl.Trainer(
         max_epochs=config["max_epochs"],
-        accelerator="gpu", 
-        devices=1, 
+        accelerator="gpu" if torch.cuda.is_available() else "cpu",
+        devices=1,
         log_every_n_steps=10,
-        default_root_dir="./outputs",
+        default_root_dir=config.get("output_dir", "./outputs"),
     )
     
     trainer.fit(model, train_loader, val_loader)

@@ -87,3 +87,31 @@ The pipeline produces:
 - Test whether learned embeddings reveal systematic molecular shifts between HCC and cirrhosis
 - Build a modular pipeline from raw MS data to downstream biological interpretation
 Note: for all the md documents except DDS.md, I used AI to format the documents such as organizing bullet points.
+
+---
+
+## Example Data & Tutorial
+
+### Example Data
+
+The notebook uses the bundled sample MGF file as example data:
+
+- [`casanovo/sample_data/sample_preprocessed_spectra.mgf`](casanovo/sample_data/sample_preprocessed_spectra.mgf)
+
+This file contains a small set of MS/MS spectra in standard MGF format. To run the pipeline on a different dataset, replace the `MGF_PATH` variable in the tutorial notebook with any valid `.mgf` file.
+
+### Tutorial Notebook
+
+A Jupyter notebook demonstrating the full happy-path pipeline is available here:
+
+- [`tutorials/ms_spectral_foundation_tutorial.ipynb`](tutorials/ms_spectral_foundation_tutorial.ipynb)
+
+The notebook walks through all pipeline stages:
+1. Loading spectra (Module 1 — `mgf_parse.py`)
+2. Preprocessing peaks (Module 2 — `peak_filter.py`)
+3. m/z binning (Module 3 — `bin_mz.py`)
+4. Initialising the `SpectrumSSLv2` model
+5. Running a masked forward pass
+6. Computing MSE and Cross-Entropy losses
+7. Extracting CLS spectrum embeddings
+8. Visualising results (spectrum bar chart, predicted vs. true m/z scatter, PCA of embeddings)
