@@ -14,6 +14,9 @@ import hashlib
 import numpy as np
 import torch
 import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.neighbors import NearestNeighbors
+import matplotlib.pyplot as plt
 from pathlib import Path
 from MS_Spectral_Foundation.analyze_embeddings import EmbeddingAnalyzer, create_sample_metadata
 from MS_Spectral_Foundation.spectrum_dataset import SpectrumDataset
@@ -57,6 +60,96 @@ def _load_cache(cache_dir: str, cache_id: str):
         )
     return None
 
+def compute_sample_similarity(sample_embeddings, unique_samples, output_dir):
+    """Compute cosine similarity between samples"""
+    
+    sim_matrix = cosine_similarity(sample_embeddings)
+
+    df = pd.DataFrame(
+        sim_matrix,
+        index=unique_samples,
+        columns=unique_samples
+    )
+
+    save_path = os.path.join(output_dir, "sample_similarity_matrix.csv")
+    df.to_csv(save_path)
+
+    # heatmap
+    plt.figure(figsize=(6,5))
+    plt.imshow(sim_matrix)
+    plt.xticks(range(len(unique_samples)), unique_samples, rotation=45)
+    plt.yticks(range(len(unique_samples)), unique_samples)
+    plt.colorbar()
+    plt.title("Sample Similarity Matrix")
+
+    heatmap_path = os.path.join(output_dir, "sample_similarity_heatmap.png")
+    plt.tight_layout()
+    plt.savefig(heatmap_path)
+    plt.close()
+
+    print(f"Saved sample similarity matrix to {save_path}")
+
+def nearest_neighbor_retrieval(embeddings, labels, output_dir, n_queries=50, k=5):
+    """Find nearest neighbor spectra"""
+    
+    rng = np.random.default_rng(0)
+    query_indices = rng.choice(len(embeddings), size=min(n_queries, len(embeddings)), replace=False)
+
+    sims = cosine_similarity(embeddings)
+
+    rows = []
+
+    for q in query_indices:
+        sim_scores = sims[q]
+
+        top_k = np.argsort(sim_scores)[::-1][1:k+1]
+
+        for idx in top_k:
+            rows.append({
+                "query_index": int(q),
+                "neighbor_index": int(idx),
+                "similarity_score": float(sim_scores[idx]),
+                "group_label": int(labels[idx])
+            })
+
+    df = pd.DataFrame(rows)
+
+    save_path = os.path.join(output_dir, "nearest_neighbor_results.csv")
+    df.to_csv(save_path, index=False)
+
+    print(f"Saved nearest neighbor results to {save_path}")
+
+def embedding_density_analysis(embeddings, labels, output_dir, k=10):
+    """Estimate embedding density"""
+    
+    nbrs = NearestNeighbors(n_neighbors=k+1).fit(embeddings)
+
+    distances, indices = nbrs.kneighbors(embeddings)
+
+    # skip self-distance
+    distances = distances[:,1:]
+
+    density = 1 / np.mean(distances, axis=1)
+
+    df = pd.DataFrame({
+        "spectrum_index": np.arange(len(embeddings)),
+        "density_score": density,
+        "group_label": labels
+    })
+
+    save_path = os.path.join(output_dir, "embedding_density_scores.csv")
+    df.to_csv(save_path, index=False)
+
+    # histogram
+    plt.figure()
+    plt.hist(density, bins=50)
+    plt.title("Embedding Density Distribution")
+
+    hist_path = os.path.join(output_dir, "embedding_density_histogram.png")
+    plt.savefig(hist_path)
+    plt.close()
+
+    print(f"Saved density scores to {save_path}")
 
 def main(config_override=None):
     # Configuration
@@ -452,7 +545,36 @@ def main(config_override=None):
         label_names=label_names,
         save_path=os.path.join(config["output_dir"], "distance_distributions.png")
     )
+
+    # Step 8.5: Additional Embedding Space Analyses
+    print("\n" + "="*80)
+    print("Module 8.5: Additional Embedding-Space Analyses")
+    print("="*80)
     
+    # 1 Cross-MGF similarity
+    print("\n[8.5.1] Sample similarity matrix...")
+    compute_sample_similarity(
+        sample_embeddings,
+        unique_samples,
+        config["output_dir"]
+    )
+    
+    # 2 Nearest neighbor retrieval
+    print("\n[8.5.2] Nearest neighbor spectral retrieval...")
+    nearest_neighbor_retrieval(
+        embeddings,
+        labels,
+        config["output_dir"]
+    )
+    
+    # 3 Density analysis
+    print("\n[8.5.3] Embedding density analysis...")
+    embedding_density_analysis(
+        embeddings,
+        labels,
+        config["output_dir"]
+    )
+
     # Step 9: Generate Report (Module 8)
     print("\n" + "="*80)
     print("Module 8: Generate Analysis Report")
