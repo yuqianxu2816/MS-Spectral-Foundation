@@ -120,6 +120,31 @@ The implementation successfully meets the issue requirements and enhances the pr
 
 This update completes the **collaborative feature development and review cycle**, aligning with the goals of Phase 2 (downstream task refinement) and improving the scientific utility of the pipeline.
 
+
+---
+
+## Update — Happy Path Tutorial Completed
+
+A complete **happy path tutorial** has been implemented and validated.
+
+The tutorial demonstrates the full end-to-end workflow of the package, including:
+
+- Loading a pretrained model
+- Processing MGF spectral data
+- Extracting spectral embeddings
+- Performing downstream embedding analysis
+- Generating visualization outputs and reports
+
+The tutorial is implemented as a Jupyter Notebook (`ms_spectral_foundation_tutorial_v2.ipynb`) and serves as a reproducible example of how users can run the full pipeline on sample data.
+
+This ensures that:
+
+- The pipeline works correctly under standard conditions (happy path)
+- Users can easily understand how to use the package
+- The system is ready for demonstration and evaluation
+
+The tutorial complements the command-line pipeline:
+
 ---
 
 # Phase 3 — Documentation and Report
