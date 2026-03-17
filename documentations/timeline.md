@@ -143,7 +143,10 @@ This ensures that:
 - Users can easily understand how to use the package
 - The system is ready for demonstration and evaluation
 
-The tutorial complements the command-line pipeline:
+The tutorial complements the command-line pipeline: python -m MS_Spectral_Foundation.run_embedding_analysis
+
+Together, they provide both **script-based** and **interactive** usage modes.
+
 
 ---
 
