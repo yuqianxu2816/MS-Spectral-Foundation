@@ -28,11 +28,11 @@ def _cache_key(mgf_paths: list, model_path: str, embedding_type: str) -> str:
     raw = "|".join(sorted(mgf_paths)) + "|" + model_path + "|" + embedding_type
     return hashlib.md5(raw.encode()).hexdigest()[:8]
 
-
+"""
 def _save_cache(cache_dir: str, cache_id: str,
                 embeddings: np.ndarray, precursor_mz: np.ndarray,
                 precursor_charge: np.ndarray, metadata: pd.DataFrame):
-    """Save embeddings and metadata to the cache directory."""
+    #Save embeddings and metadata to the cache directory.
     os.makedirs(cache_dir, exist_ok=True)
     np.save(os.path.join(cache_dir, f"{cache_id}_embeddings.npy"), embeddings)
     np.save(os.path.join(cache_dir, f"{cache_id}_precursor_mz.npy"), precursor_mz)
@@ -42,13 +42,41 @@ def _save_cache(cache_dir: str, cache_id: str,
 
 
 def _load_cache(cache_dir: str, cache_id: str):
-    """Try to load cached results. Returns None if the cache does not exist."""
+    #Try to load cached results. Returns None if the cache does not exist.
     emb_path  = os.path.join(cache_dir, f"{cache_id}_embeddings.npy")
     mz_path   = os.path.join(cache_dir, f"{cache_id}_precursor_mz.npy")
     chg_path  = os.path.join(cache_dir, f"{cache_id}_precursor_charge.npy")
     meta_path = os.path.join(cache_dir, f"{cache_id}_metadata.parquet")
     if all(os.path.exists(p) for p in [emb_path, mz_path, chg_path, meta_path]):
         print(f"[Cache] Cache hit (id={cache_id}), loading directly and skipping Modules 1-6")
+        return (
+            np.load(emb_path),
+            np.load(mz_path),
+            np.load(chg_path),
+            pd.read_parquet(meta_path),
+        )
+    return None
+"""
+
+def _save_cache(cache_dir: str, 
+                embeddings: np.ndarray, precursor_mz: np.ndarray,
+                precursor_charge: np.ndarray, metadata: pd.DataFrame):
+    """Save embeddings and metadata to the cache directory."""
+    os.makedirs(cache_dir, exist_ok=True)
+    np.save(os.path.join(cache_dir, f"embeddings.npy"), embeddings)
+    np.save(os.path.join(cache_dir, f"precursor_mz.npy"), precursor_mz)
+    np.save(os.path.join(cache_dir, f"precursor_charge.npy"), precursor_charge)
+    metadata.to_parquet(os.path.join(cache_dir, f"metadata.parquet"), index=False)
+    print(f"[Cache] Saved to {cache_dir}")
+
+def _load_cache(cache_dir: str):
+    """Try to load cached results. Returns None if the cache does not exist."""
+    emb_path  = os.path.join(cache_dir, "embeddings.npy")
+    mz_path   = os.path.join(cache_dir, "precursor_mz.npy")
+    chg_path  = os.path.join(cache_dir, "precursor_charge.npy")
+    meta_path = os.path.join(cache_dir, "metadata.parquet")
+    if all(os.path.exists(p) for p in [emb_path, mz_path, chg_path, meta_path]):
+        print(f"[Cache] Cache hit, loading directly and skipping Modules 1-6")
         return (
             np.load(emb_path),
             np.load(mz_path),
@@ -112,8 +140,9 @@ def main(config_override=None):
     
     # Cache Check
     cache_dir = config.get("cache_dir")
-    cache_id  = _cache_key(config["mgf_paths"], config["model_path"], config["embedding_type"])
-    cached    = _load_cache(cache_dir, cache_id) if cache_dir else None
+    # cache_id  = _cache_key(config["mgf_paths"], config["model_path"], config["embedding_type"])
+    # cached    = _load_cache(cache_dir, cache_id) if cache_dir else None
+    cached    = _load_cache(cache_dir) if cache_dir else None
 
     if cached is not None:
         embeddings, precursor_mz, precursor_charge, combined_metadata = cached
@@ -257,7 +286,9 @@ def main(config_override=None):
         
         # Save Cache
         if cache_dir:
-            _save_cache(cache_dir, cache_id,
+            # _save_cache(cache_dir, cache_id,
+            #             embeddings, precursor_mz, precursor_charge, combined_metadata)
+            _save_cache(cache_dir,
                         embeddings, precursor_mz, precursor_charge, combined_metadata)
     
     # Step 4: Prepare Metadata for Analysis
