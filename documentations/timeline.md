@@ -82,6 +82,46 @@ This phase focuses on making the downstream analysis **more scientifically meani
 
 ---
 
+# Phase 2 Update — PR Implementation and Review (Homework 3)
+
+**Status: Completed (March 18)**
+
+As part of Homework 3, additional downstream embedding-space analyses were designed, implemented, and reviewed through a collaborative pull request workflow.
+
+### Implemented Feature (Issue #4)
+
+The following new analyses were added to the pipeline in `run_embedding_analysis.py` after Module 8:
+
+* Cross-MGF sample similarity matrix using cosine similarity
+* Nearest neighbor spectral retrieval based on embedding similarity
+* Embedding density estimation using k-nearest neighbors
+
+These additions extend the existing downstream analysis framework with **non-supervised embedding-space evaluation methods**, which are more appropriate given the small number of biological samples (cirrhosis vs HCC).
+
+### Pull Request Review
+
+A pull request (#5) was submitted and reviewed. The review focused on:
+
+* Verifying that no existing pipeline components were modified or removed
+* Ensuring that new analyses are properly integrated after Module 8
+* Checking code clarity, structure, and consistency with the existing codebase
+* Evaluating scalability considerations (e.g., similarity computation and memory usage)
+* Identifying potential edge cases (e.g., numerical stability in density estimation)
+
+Constructive feedback was provided to improve:
+
+* Code scalability for large spectral datasets
+* Numerical robustness in downstream computations
+* Code readability and documentation clarity
+
+### Outcome
+
+The implementation successfully meets the issue requirements and enhances the project by adding meaningful and extensible embedding-space analysis tools.
+
+This update completes the **collaborative feature development and review cycle**, aligning with the goals of Phase 2 (downstream task refinement) and improving the scientific utility of the pipeline.
+
+---
+
 # Phase 3 — Documentation and Report
 
 **Timeline: March 20 – April 1**
