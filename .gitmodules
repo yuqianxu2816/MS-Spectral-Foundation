@@ -3,4 +3,4 @@
 	url = https://github.com/Noble-Lab/casanovo.git
 [submodule "depthcharge"]
 	path = depthcharge
-	url = https://github.com/wfondrie/depthcharge.git
+	url = https://github.com/yuqianxu2816/depthcharge.git
