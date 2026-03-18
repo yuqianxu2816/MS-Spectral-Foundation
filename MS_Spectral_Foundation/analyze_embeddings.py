@@ -432,7 +432,7 @@ class EmbeddingAnalyzer:
         else:
             raise ValueError(f"Unsupported strategy or # of groups: {strategy}")
         
-        print(f"✅ Exemplar discovery complete")
+        print(f"Exemplar discovery complete")
         
         return exemplars
     
@@ -660,7 +660,7 @@ class EmbeddingAnalyzer:
         with open(save_path, "w") as f:
             f.write(report_text)
         
-        print(f"✅ Report saved to: {save_path}")
+        print(f"Report saved to: {save_path}")
         print("\n" + report_text)
 
 
