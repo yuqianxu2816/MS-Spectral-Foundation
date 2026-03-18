@@ -96,22 +96,40 @@ Note: for all the md documents except DDS.md, I used AI to format the documents 
 
 The notebook uses the bundled sample MGF file as example data:
 
-- [`casanovo/sample_data/sample_preprocessed_spectra.mgf`](casanovo/sample_data/sample_preprocessed_spectra.mgf)
+- https://drive.google.com/drive/u/1/folders/1pN5ljKQXvUwShXaPhY-F4fHJP7JXQkc5
 
-This file contains a small set of MS/MS spectra in standard MGF format. To run the pipeline on a different dataset, replace the `MGF_PATH` variable in the tutorial notebook with any valid `.mgf` file.
+This file contains a small set of MS/MS spectra in standard MGF format. To run the pipeline on a different dataset, replace the input MGF path accordingly.
 
-### Tutorial Notebook
+---
 
-A Jupyter notebook demonstrating the full happy-path pipeline is available here:
+### Tutorial Notebook (Happy Path Pipeline)
 
-- [`tutorials/ms_spectral_foundation_tutorial.ipynb`](tutorials/ms_spectral_foundation_tutorial.ipynb)
+A Jupyter notebook demonstrating the full **happy-path pipeline** is available here:
 
-The notebook walks through all pipeline stages:
-1. Loading spectra (Module 1 — `mgf_parse.py`)
-2. Preprocessing peaks (Module 2 — `peak_filter.py`)
-3. m/z binning (Module 3 — `bin_mz.py`)
-4. Initialising the `SpectrumSSLv2` model
-5. Running a masked forward pass
-6. Computing MSE and Cross-Entropy losses
-7. Extracting CLS spectrum embeddings
-8. Visualising results (spectrum bar chart, predicted vs. true m/z scatter, PCA of embeddings)
+- https://github.com/yuqianxu2816/MS-Spectral-Foundation/blob/main/MS_Spectral_Foundation/ms_spectral_foundation_tutorial_v2.ipynb
+
+Instead of running each module independently, the notebook demonstrates the **end-to-end workflow** using the main pipeline scripts:
+
+1. **Model training**
+   - Runs `train.py` to train the self-supervised spectral encoder on MGF data
+   - Produces a pretrained model checkpoint (`.pt`)
+
+2. **Embedding extraction and downstream analysis**
+   - Runs `run_embedding_analysis.py`
+   - Extracts spectrum embeddings using the pretrained model
+   - Aggregates embeddings to sample level
+   - Performs embedding-space analysis (HCC vs cirrhosis)
+
+3. **Outputs and visualization**
+   - Embedding visualizations (PCA / t-SNE / UMAP)
+   - Distance and distribution analysis
+   - Exemplar spectra discovery
+   - Final analysis report
+
+---
+
+### Notes
+
+- The notebook focuses on the **standard usage path (happy path)** of the system.
+- All core modules (Module 1–8) are executed **implicitly through the pipeline scripts**, rather than being called individually.
+- This design reflects real-world usage, where users interact with the system through high-level entry points:
