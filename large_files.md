@@ -1,3 +1,3 @@
 Link to google drive for large files (orignal dataset, converted mgf dataset, saved model pt file, saved embedding caches) cannot be uploaded to github:
 
-- https://drive.google.com/drive/u/1/folders/1EthsTqha2hCPAzYwF1WZgkLFw5PiIUIw 
+https://drive.google.com/drive/u/1/folders/1EthsTqha2hCPAzYwF1WZgkLFw5PiIUIw 
