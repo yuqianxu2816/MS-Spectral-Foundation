@@ -146,6 +146,7 @@ Example files used in the demonstration pipeline:
 - 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf
 - 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf
 
+Link to examples files: https://drive.google.com/drive/u/1/folders/1aW5r0gmGpBm22EP77FdAEFRmgsmWb3FN 
 
 #### Usage in the project workflow
 
