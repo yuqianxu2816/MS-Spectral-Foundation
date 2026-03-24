@@ -124,10 +124,9 @@ In this project, the input to the self-supervised model is MS/MS spectra in MGF 
 - Can be regarded as: **Sequence / Set / Sparse / Signal**
 
 
+## Example dataset for using the tool (HW 3)
 
-## Example dataset for using the tool (HW 4)
-
-To demonstrate how the MS-Spectral-Foundation pipeline operates, datasets derived from the PRIDE project **PXD047546** is used.
+To demonstrate how the MS-Spectral-Foundation pipeline operates, datasets derived from the PRIDE project **PXD047546** are used.
 
 ### Source and preprocessing
 
@@ -141,82 +140,114 @@ The preprocessing workflow follows the data preparation pipeline implemented in 
 
 3. MS2 spectra are serialized into **MGF format**, which serves as the direct input to the self-supervised learning model.
 
-Example files used in the demonstration pipeline:
+Original example files:
 
-- 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf
-- 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf
+- 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf  
+- 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf  
 
-Link to examples files: https://drive.google.com/drive/u/1/folders/1aW5r0gmGpBm22EP77FdAEFRmgsmWb3FN 
+---
 
-#### Usage in the project workflow
+### Repository size constraint and provided example data
 
-The example MGF files are used at different stages of the pipeline:
+Due to GitHub file size limitations, the original MGF files (each ~300–370 MB) cannot be directly included in the repository.
 
-- **Model training**
-  
-  The file  
-  `09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf`  
-  is used as the primary input dataset for training the self-supervised spectrum encoder.  
-  During training, each `BEGIN IONS ... END IONS` block in this file is treated as an individual spectrum instance.
+To address this:
 
-- **Downstream embedding analysis**
+- The original MGF files are **downsampled / truncated to ~25 MB each**
+- These smaller files are included in: `example_data/`
 
-  After training, embeddings are extracted from spectra in two example files:
 
-  - `09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf`
-  - `09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf`
+These truncated MGF files still preserve realistic MS/MS spectrum structure and are sufficient for:
 
-  These two datasets represent two biological conditions (**cirrhosis** and **HCC**) and are used to perform downstream embedding-space analysis.  
-  The extracted spectrum embeddings are aggregated and compared to evaluate whether the learned representations capture meaningful molecular differences between the two disease groups.
+- running the full pipeline
+- training the model
+- generating embeddings
+- performing downstream comparison (HCC vs cirrhosis)
+
+---
+
+### Two usage modes (recommended workflow)
+
+To make the repository both **reproducible** and **easy to use**, two usage options are provided:
+
+---
+
+#### Option 1 — Full pipeline (from scratch)
+
+Users can run the complete workflow using the provided example MGF files:
+
+1. Train the self-supervised model (`train.py`)  
+2. Generate a model checkpoint (`.pt`)  
+3. Extract embeddings (`.npy`from `run_embedding_analysis.py`)
+4. Run downstream embedding analysis (`run_embedding_analysis.py`)
+
+This demonstrates the **full pipeline from raw spectra to biological interpretation**.
+
+---
+
+#### Option 2 — Fast demo (precomputed outputs)
+
+For convenience, the repository also provides:
+
+- Pretrained model checkpoint (`.pt`, stored via Git LFS)
+- Precomputed embedding cache (stored via Git LFS)
+
+These allow users to:
+
+- skip training
+- skip embedding extraction
+- directly run downstream analysis
+
+---
+
+### How to run
+
+Users can directly execute: `MS_Spectral_Foundation/ms_spectral_foundation_tutorial_v2.ipynb`
+
+
+This notebook supports both modes:
+
+- **From-scratch mode** → uses `example_data/*.mgf`
+- **Fast demo mode** → loads precomputed model and embedding cache
+
+---
 
 ### Dataset structure
 
 Each `.mgf` file contains many MS/MS spectra, where each spectrum is represented by a block:
 
-- BEGIN IONS
-- PEPMASS=...
-- CHARGE=...
-- m/z intensity
-- m/z intensity
-- ...
-- END IONS
+- BEGIN IONS  
+- PEPMASS=...  
+- CHARGE=...  
+- m/z intensity  
+- ...  
+- END IONS  
 
+Each block corresponds to a **single MS/MS spectrum**, which becomes one training instance.
 
-Each block corresponds to a **single MS/MS spectrum**, which becomes one training instance for the representation learning model.
-
-Typical statistics of the example data:
-
-- File size (MGF): approximately **300–370 MB per sample**
-- Number of spectra per file: typically **tens of thousands of MS/MS spectra**
-- Each spectrum contains **m/z–intensity peak pairs**
-- Peak lists are later filtered and normalized during preprocessing.
+---
 
 ### Example analysis scenario
 
-Two example samples are used to illustrate downstream embedding analysis:
+Two example samples are used:
 
 | Sample | Condition |
-|------|------|
+|--------|----------|
 | Sample4_561 | Cirrhosis |
 | Sample9_0206 | HCC |
 
-After training the self-supervised spectrum encoder, embeddings are extracted from both datasets and compared using the embedding analysis pipeline. This allows exploration of whether the learned spectral representations capture systematic molecular differences between cirrhosis and HCC samples.
+After training or loading the pretrained model, embeddings are extracted and compared using:
+
+- PCA / t-SNE / UMAP visualization  
+- Distance / similarity analysis  
+- Exemplar spectra discovery  
+
+---
 
 ### Why this is a good example dataset
 
-This dataset is suitable for demonstrating the tool for several reasons:
-
-- It contains **real LC-MS/MS spectra from clinical serum samples**, representing realistic mass spectrometry data.
-- The dataset includes **two biologically meaningful groups (HCC vs cirrhosis)**, enabling representation comparison in downstream embedding analysis.
-- Each file contains **many spectra**, allowing the self-supervised model to learn meaningful spectral patterns.
-- The data follows the **full preprocessing pipeline** used by the software (`raw → mzML → mgf`), demonstrating how the tool integrates with standard proteomics workflows.
-
-### Repository example data
-
-Due to the large size of full LC-MS/MS datasets (several GB per raw file, and 300 MB after converted to mgf), only a **small demonstration subset** can be included in the repository.  
-If an example file smaller than 20 MB is provided, it can be placed in:
-
- - data/example_spectra.mgf
-
-
-This file allows users to quickly test the pipeline without downloading the full dataset.
+- Real clinical LC-MS/MS serum data  
+- Two biologically meaningful conditions (HCC vs cirrhosis)  
+- Spectrum-level learning with many instances  
+- Fully compatible with the pipeline (`raw → mzML → mgf`)  
+- Supports both **full reproducibility** and **fast demonstration**
