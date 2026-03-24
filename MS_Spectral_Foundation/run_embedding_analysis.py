@@ -63,18 +63,26 @@ def _save_cache(cache_dir: str,
                 precursor_charge: np.ndarray, metadata: pd.DataFrame):
     """Save embeddings and metadata to the cache directory."""
     os.makedirs(cache_dir, exist_ok=True)
-    np.save(os.path.join(cache_dir, f"embeddings.npy"), embeddings)
-    np.save(os.path.join(cache_dir, f"precursor_mz.npy"), precursor_mz)
-    np.save(os.path.join(cache_dir, f"precursor_charge.npy"), precursor_charge)
-    metadata.to_parquet(os.path.join(cache_dir, f"metadata.parquet"), index=False)
+    # np.save(os.path.join(cache_dir, f"embeddings.npy"), embeddings)
+    # np.save(os.path.join(cache_dir, f"precursor_mz.npy"), precursor_mz)
+    # np.save(os.path.join(cache_dir, f"precursor_charge.npy"), precursor_charge)
+    # metadata.to_parquet(os.path.join(cache_dir, f"metadata.parquet"), index=False)
+    np.save(os.path.join(cache_dir, "example_embeddings.npy"), embeddings)
+    np.save(os.path.join(cache_dir, "example_precursor_mz.npy"), precursor_mz)
+    np.save(os.path.join(cache_dir, "example_precursor_charge.npy"), precursor_charge)
+    metadata.to_parquet(os.path.join(cache_dir, "example_metadata.parquet"), index=False)
     print(f"[Cache] Saved to {cache_dir}")
 
 def _load_cache(cache_dir: str):
     """Try to load cached results. Returns None if the cache does not exist."""
-    emb_path  = os.path.join(cache_dir, "embeddings.npy")
-    mz_path   = os.path.join(cache_dir, "precursor_mz.npy")
-    chg_path  = os.path.join(cache_dir, "precursor_charge.npy")
-    meta_path = os.path.join(cache_dir, "metadata.parquet")
+    # emb_path  = os.path.join(cache_dir, "embeddings.npy")
+    # mz_path   = os.path.join(cache_dir, "precursor_mz.npy")
+    # chg_path  = os.path.join(cache_dir, "precursor_charge.npy")
+    # meta_path = os.path.join(cache_dir, "metadata.parquet")
+    emb_path  = os.path.join(cache_dir, "example_embeddings.npy")
+    mz_path   = os.path.join(cache_dir, "example_precursor_mz.npy")
+    chg_path  = os.path.join(cache_dir, "example_precursor_charge.npy")
+    meta_path = os.path.join(cache_dir, "example_metadata.parquet")
     if all(os.path.exists(p) for p in [emb_path, mz_path, chg_path, meta_path]):
         print(f"[Cache] Cache hit, loading directly and skipping Modules 1-6")
         return (
@@ -90,7 +98,7 @@ def main(config_override=None):
     # Configuration
     config = {
         # Model
-        "model_path": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\outputs\model_ssl_v4_epoch019.pt",
+        "model_path": r"outputs\model_ssl_v4_epoch019.pt",
         
         # Data - Support multiple MGF files for multi-group analysis
         # Option 1: Single MGF with multiple groups in TITLE field
@@ -99,10 +107,16 @@ def main(config_override=None):
         # ],
         
         # Option 2: Multiple MGF files, one per disease group
+        #"mgf_paths": [
+        #    r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf",
+        #    r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf",
+        #],
+
         "mgf_paths": [
-            r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf",
-            r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf",
+            r"example_data\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated.mgf",
+            r"example_data\09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated.mgf",
         ],
+        
         
         # Manual group labels (only needed if MGF TITLE doesn't contain disease info)
         # If None, will try to extract from MGF TITLE field
@@ -121,11 +135,14 @@ def main(config_override=None):
         "n_exemplars": 5,
         
         # Output directory
-        "output_dir": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\logs\embedding_analysis",
+        # "output_dir": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\logs\embedding_analysis",
+        "output_dir": r"logs\example_embedding_analysis",
         
         # Cache directory (stores Module 1-6 results so subsequent runs skip recomputation)
+        
         # Set to None to disable caching
-        "cache_dir": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\logs\embedding_cache",
+        # "cache_dir": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\logs\embedding_cache",
+        "cache_dir": r"logs\example_embedding_cache",
     }
     if config_override:
         config.update(config_override)
@@ -151,7 +168,8 @@ def main(config_override=None):
         # Even on a cache hit we still need an analyzer instance (used by aggregation steps etc.)
         model_path = Path(config["model_path"])
         if not model_path.exists():
-            ckpt_dir = Path(r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\outputs\lightning_logs")
+            # ckpt_dir = Path(r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\outputs\lightning_logs")
+            ckpt_dir = Path(r"outputs\lightning_logs")
             checkpoints = list(ckpt_dir.rglob("*.ckpt")) if ckpt_dir.exists() else []
             if checkpoints:
                 config["model_path"] = str(max(checkpoints, key=lambda p: p.stat().st_mtime))

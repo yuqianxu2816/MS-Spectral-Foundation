@@ -8,5 +8,6 @@ build/
 
 *.ckpt
 *.npy
+!logs/example_embedding_cache/*.npy
 
 logs/embedding_cache/

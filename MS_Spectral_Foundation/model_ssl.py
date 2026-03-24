@@ -591,6 +591,7 @@ class SpectrumSSLv2(pl.LightningModule):
         # Save model as .pt file on the final epoch
         if self.current_epoch == self.trainer.max_epochs - 1:
             pt_save_path = os.path.join(self.trainer.default_root_dir, f"model_ssl_v4_epoch{self.current_epoch:03d}.pt")
+            # pt_save_path = os.path.join(self.trainer.default_root_dir, f"model_ssl_v4_truncated_epoch{self.current_epoch:03d}.pt")
             torch.save({
                 'epoch': self.current_epoch,
                 'model_state_dict': self.state_dict(),

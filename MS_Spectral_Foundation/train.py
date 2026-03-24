@@ -33,6 +33,8 @@ def main(config_override=None):
         # Data parameters
         "train_mgf": r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf",
         "val_mgf": r"C:\Users\Lenovo\Desktop\576dataset\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf",
+        # "train_mgf": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\example_data\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated.mgf",
+        # "val_mgf": r"C:\Users\Lenovo\Desktop\576dataset\Github_project\MS-Spectral-Foundation\example_data\09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated.mgf",
         "max_peaks": 150,
         "mz_min": 50.0,
         "mz_max": 2500.0,
@@ -50,7 +52,8 @@ def main(config_override=None):
         "batch_size": 32,
         "lr": 1e-4,
         "max_epochs": 20,
-        "num_workers": 4,
+        # "num_workers": 4,  # Use multiple workers for data loading if possible
+        "num_workers": 0,  # 0 = main process only (avoids multiprocessing spawn conflict with depthcharge/string.py)
         "output_dir": "./outputs",
     }
     if config_override:

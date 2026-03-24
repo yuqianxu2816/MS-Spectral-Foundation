@@ -1,0 +1,61 @@
+================================================================================
+Exemplar Spectra Indices
+================================================================================
+
+Note: Indices are global across all loaded MGF files
+Total spectra: 18069
+Disease groups: {0: 'Cirrhosis', 1: 'HCC'}
+
+## Strategy: Centroids
+--------------------------------------------------------------------------------
+group_0_centroid:
+  Indices: [8517, 6333, 7971, 6476, 6031]
+    [8517] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [6333] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [7971] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [6476] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [6031] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+
+group_1_centroid:
+  Indices: [15966, 15663, 15511, 15655, 15757]
+    [15966] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [15663] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [15511] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [15655] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [15757] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+
+
+## Strategy: Extremes
+--------------------------------------------------------------------------------
+max_distance_group0:
+  Indices: [2025, 2840, 5349, 6554, 2840]
+    [2025] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [2840] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [5349] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [6554] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [2840] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+
+max_distance_group1:
+  Indices: [16397, 10087, 10087, 10087, 10740]
+    [16397] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [10087] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [10087] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [10087] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [10740] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+
+min_distance_group0:
+  Indices: [3834, 717, 7016, 2635, 6032]
+    [3834] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [717] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [7016] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [2635] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+    [6032] Sample: 09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output_truncated, Group: Cirrhosis
+
+min_distance_group1:
+  Indices: [12837, 11916, 16031, 11608, 15383]
+    [12837] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [11916] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [16031] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [11608] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+    [15383] Sample: 09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output_truncated, Group: HCC
+

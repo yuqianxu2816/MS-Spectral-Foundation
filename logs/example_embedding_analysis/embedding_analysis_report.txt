@@ -1,0 +1,26 @@
+================================================================================
+MS-Spectral-Foundation: Embedding Analysis Report
+Modules 7 & 8: Distribution Analysis and Representation Evaluation
+================================================================================
+
+## Distance Metrics
+--------------------------------------------------------------------------------
+  intra_Cirrhosis_mean                    : 7.652621
+  intra_Cirrhosis_std                     : 4.938087
+  intra_HCC_mean                          : 7.939812
+  intra_HCC_std                           : 5.012716
+  inter_Cirrhosis_HCC_mean                : 7.799442
+  inter_Cirrhosis_HCC_std                 : 4.975041
+  separation_ratio                        : 1.000414
+
+## Statistical Tests
+--------------------------------------------------------------------------------
+  mannwhitney_u_statistic                 : 7986611712498.000000
+  mannwhitney_p_value                     : 4.0321e-03
+
+## Interpretation
+--------------------------------------------------------------------------------
+  Moderate separation: Some distinguishable structure between groups
+  Statistical significance: Significant (p < 0.05)
+
+================================================================================
