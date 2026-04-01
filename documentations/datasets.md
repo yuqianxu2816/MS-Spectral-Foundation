@@ -189,8 +189,8 @@ This demonstrates the **full pipeline from raw spectra to biological interpretat
 
 For convenience, the repository also provides:
 
-- Pretrained model checkpoint (`.pt`, stored via Git LFS)
-- Precomputed embedding cache (stored via Git LFS)
+- Pretrained model checkpoint (`.pt`, stored via Git LFS): https://github.com/yuqianxu2816/MS-Spectral-Foundation/blob/main/outputs/model_ssl_v4_epoch019.pt
+- Precomputed example embedding cache (stored via Git LFS): https://github.com/yuqianxu2816/MS-Spectral-Foundation/tree/main/logs/example_embedding_cache
 
 These allow users to:
 
@@ -251,3 +251,67 @@ After training or loading the pretrained model, embeddings are extracted and com
 - Spectrum-level learning with many instances  
 - Fully compatible with the pipeline (`raw → mzML → mgf`)  
 - Supports both **full reproducibility** and **fast demonstration**
+
+
+## Real dataset for answering a biological question using the tool (HW 4)
+
+To apply the MS-Spectral-Foundation pipeline to a real biological question, the same PRIDE dataset **PXD047546** is used here, but now in the context of an actual downstream analysis rather than only an example demonstration.
+
+As in the previous section, the analysis is based on serum LC-MS/MS data derived from two biologically meaningful conditions:
+
+- **cirrhosis**
+- **hepatocellular carcinoma (HCC)**
+
+The real analysis notebook uses the same pair of MGF files as the example workflow. The real data uses the full mgf file, while the previous example workflow uses the truncated mgf file:
+
+- `09062023_Mehta_GR10000524_DDRC_Sample4_561_cirrhotic_output.mgf`
+- `09062023_Mehta_GR10000524_DDRC_Sample9_0206_HCC_output.mgf`
+
+These are real spectra derived from the PRIDE dataset:  
+https://www.ebi.ac.uk/pride/archive/projects/PXD047546
+
+---
+
+### Real biological question
+
+The biological question addressed in this section is:
+
+**Can self-supervised spectrum embeddings learned from serum LC-MS/MS data reveal meaningful distribution-level differences between cirrhosis and HCC samples?**
+
+The goal is not to build a fully supervised disease classifier, but to evaluate whether the learned embedding space captures biologically relevant molecular structure that differs between these two disease conditions.
+
+---
+
+### Expected results
+
+The expected results are downstream embedding-based comparisons between the two disease groups, including:
+
+- sample-level embedding aggregation
+- embedding-space visualization
+- distance / similarity analysis
+- exemplar-spectrum discovery
+
+If the method works as intended, the cirrhosis-derived and HCC-derived spectra should show at least partial structural differences in embedding space, providing evidence that the learned representations contain biologically meaningful information related to disease status.
+
+---
+
+### Only feasible option — Fast demo (precomputed outputs)
+
+Running the full workflow on the real data is possible in principle, but in practice it is time-consuming. For example, training from scratch to produce the `.pt` checkpoint can take more than ten hours, and embedding extraction on the full data also adds substantial runtime.
+
+For convenience, the repository therefore also provides:
+
+- Pretrained model checkpoint (`.pt`, stored via Git LFS): https://github.com/yuqianxu2816/MS-Spectral-Foundation/blob/main/outputs/model_ssl_v4_epoch019.pt
+- Precomputed embedding cache (stored in Google Drive due to large file size cannot be uploaded to github): https://drive.google.com/drive/u/1/folders/1mou-54IODd5_r8QfB2PgUWHsQalbGsQP
+
+These allow users to:
+
+- skip training
+- skip embedding extraction
+- directly run downstream analysis
+
+---
+
+### Notebook and workflow consistency
+
+Aside from the real-data paths and the use of precomputed outputs for efficiency, the remaining notebook workflow is consistent with the example notebook and example-data setup described in the previous section. In other words, the code structure, analysis logic, and tutorial flow remain the same; the main difference is that this section frames the run as a real biological application (full mgf data) rather than only a compact reproducible example (truncated mgf data).
