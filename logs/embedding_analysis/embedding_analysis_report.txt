@@ -5,18 +5,18 @@ Modules 7 & 8: Distribution Analysis and Representation Evaluation
 
 ## Distance Metrics
 --------------------------------------------------------------------------------
-  intra_Cirrhosis_mean                    : 9.382818
-  intra_Cirrhosis_std                     : 4.195101
-  intra_HCC_mean                          : 10.049744
-  intra_HCC_std                           : 4.295308
-  inter_Cirrhosis_HCC_mean                : 9.815296
-  inter_Cirrhosis_HCC_std                 : 4.308783
-  separation_ratio                        : 1.010191
+  intra_Cirrhosis_mean                    : 11.973180
+  intra_Cirrhosis_std                     : 5.045846
+  intra_HCC_mean                          : 12.918823
+  intra_HCC_std                           : 5.069222
+  inter_Cirrhosis_HCC_mean                : 12.573594
+  inter_Cirrhosis_HCC_std                 : 5.136510
+  separation_ratio                        : 1.010252
 
 ## Statistical Tests
 --------------------------------------------------------------------------------
-  mannwhitney_u_statistic                 : 7898887535707.000000
-  mannwhitney_p_value                     : 1.9739e-194
+  mannwhitney_u_statistic                 : 7890510253312.000000
+  mannwhitney_p_value                     : 4.8036e-229
 
 ## Interpretation
 --------------------------------------------------------------------------------
